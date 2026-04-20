@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <link rel="icon" type="imag/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMzIgNCBMNTQgMTQgVjMyIEM1NCA0NiAzMiA2MCAzMiA2MCBDMzIgNjAgMTAgNDYgMTAgMzIgVjE0IEwzMiA0WiIgc3Ryb2tlPSIjMUU0MEFGIiBzdHJva2Utd2lkdGg9IjMuNSIgZmlsbD0ibm9uZSIvPjxwYXRoIGQ9Ik0zMiA5IEw0OCAxNiBWMzAgQzQ4IDQyIDMyIDUzIDMyIDUzIEMzMiA1MyAxNiA0MiAxNiAzMCBWMTYgTDMyIDlaIiBzdHJva2U9IiMxRTQwQUYiIHN0cm9rZS13aWR0aD0iMi41IiBmaWxsPSJub25lIi8+PGxpbmUgeDE9IjIwIiB5MT0iMjIiIHgyPSI0NCIgeTI9IjIyIiBzdHJva2U9IiMxRTQwQUYiIHN0cm9rZS13aWR0aD0iMi41IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48bGluZSB4MT0iMjEiIHkxPSIyOCIgeDI9IjQzIiB5Mj0iMjgiIHN0cm9rZT0iIzFFNDBBRiIgc3Ryb2tlLXdpZHRoPSIyLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxsaW5lIHgxPSIyMyIgeTE9IjM0IiB4Mj0iNDEiIHkyPSIzNCIgc3Ryb2tlPSIjMUU0MEFGIiBzdHJva2Utd2lkdGg9IjIuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGxpbmUgeDE9IjI1IiB5MT0iNDAiIHgyPSIzOSIgeTI9IjQwIiBzdHJva2U9IiMxRTQwQUYiIHN0cm9rZS13aWR0aD0iMi41IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48L3N2Zz4=">
+    <title>薪税智算 · 个税劳务计算器</title>
+    <!-- 字体与图标 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Noto Sans SC", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.3;
+            font-size-adjust: 0.5;
+        }
+
+        body {
+            font-family: "Noto Sans SC", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #eef2f6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem 1rem;
+            line-height: 1.3;
+            font-size-adjust: 0.5;
+            
+            overflow-y: scroll;
+            -ms-overflow-style: none;
+        }
+        
+        body::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* 主卡片 */
+        .app-card {
+            max-width: 1000px;
+            width: 100%;
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 2rem;
+            box-shadow: 0 20px 40px -12px rgba(0,0,0,0.08), 0 4px 18px rgba(0,0,0,0.04);
+            border: 1px solid rgba(255,255,255,0.4);
+            padding: 2rem 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* 头部 */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.8rem;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .title-section h1 {
+            font-weight: 600;
+            font-size: 1.9rem;
+            letter-spacing: -0.02em;
+            color: #0b1e33;
+            margin-bottom: 0.15rem;
+        }
+
+        .title-section .sub {
+            font-size: 0.9rem;
+            color: #546a7a;
+        }
+
+        .lang-switch {
+            display: flex;
+            gap: 0.4rem;
+            background: #e2e9f0;
+            padding: 0.3rem;
+            border-radius: 40px;
+            border: 1px solid #cfdde6;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            font-weight: 500;
+            color: #3a4c5e;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+
+        .lang-btn.active {
+            background: white;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            color: #1e3a5f;
+        }
+
+        /* 标签导航 */
+        .tabs-nav {
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid rgba(0,0,0,0.04);
+            padding-bottom: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 0.5rem 1rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #4a627a;
+            border-radius: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.15s;
+            flex: 1;
+            justify-content: center;
+            min-height: 56px;
+        }
+
+        .tab-btn i { opacity: 0.7; font-size: 1.1rem; margin: 4px; }
+        .tab-btn:hover { background: rgba(0,0,0,0.02); color: #1a3a5c; }
+        .tab-btn.active {
+            background: #1e3a5f;
+            color: white;
+            box-shadow: 0 4px 10px rgba(30,58,95,0.2);
+        }
+        
+        /* --- 移动端菜单按钮（默认隐藏） --- */
+        .menu-toggle {
+            display: none;
+            background: #1e3a5f;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.2rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 10px rgba(30,58,95,0.15);
+            transition: background 0.2s;
+        }
+        .menu-toggle:hover { background: #162c4a; }
+        .toggle-icon { transition: transform 0.3s; }
+        .menu-toggle.open .toggle-icon { transform: rotate(180deg); }
+
+        .panel {
+            display: none;
+        }
+
+        .panel.active {
+            display: block;
+        }
+
+        /* 卡片内样式 */
+        .card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 1.6rem 1.8rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            border: 1px solid #eef2f6;
+            margin-bottom: 1.5rem;
+        }
+
+        .card h3 {
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+            color: #1e3a5f;
+            border-left: 4px solid #1e3a5f;
+            padding-left: 1rem;
+        }
+
+        .ref-list {
+            list-style: none;
+        }
+        .ref-list li {
+            margin-bottom: 0.7rem;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: baseline;
+        }
+        .ref-index {
+            font-weight: 600;
+            color: #1e3a5f;
+            min-width: 2rem;
+        }
+        .ref-item {
+            color: inherit;
+            text-decoration: none;
+            cursor: pointer;
+            border-bottom: 1px dashed #a0b8cc;
+        }
+        .ref-item:hover {
+            color: #1e3a5f;
+            border-bottom: 1px solid #1e3a5f;
+        }
+        /* 引用数字悬浮提示 */
+        .cite-num {
+            cursor: help;
+            font-weight: 600;
+            color: #1e3a5f;
+            border-bottom: 1px dashed #1e3a5f;
+        }
+        [data-tooltip] {
+            position: relative;
+        }
+        [data-tooltip]:hover:after {
+            content: attr(data-tooltip);
+            position: absolute;
+            background: #1e2f3e;
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            bottom: 150%;
+            left: 0;
+            z-index: 10;
+        }
+
+        /* 表格 */
+        .rate-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0.8rem 0;
+            font-size: 0.9rem;
+            table-layout: fixed;
+        }
+        .rate-table th, .rate-table td {
+            padding: 0.6rem 0.5rem;
+            border-bottom: 1px solid #e2e9f0;
+            text-align: center;
+        }
+        .rate-table th {
+            background: #f4f9ff;
+            font-weight: 600;
+        }
+
+        .input-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .input-label {
+            font-weight: 500;
+            margin-bottom: 0.3rem;
+            display: block;
+            color: #1f3a4e;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 2rem;
+            background: #f4f7fb;
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+            margin-bottom: 1.2rem;
+            align-items: center;
+            flex-wrap: wrap;
+            min-height: 3.2rem;
+        }
+        
+        #monthsContainer {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: none;
+        }
+
+        #monthsContainer.hidden-months {
+            display: none;
+            pointer-events: none;  /* 防止误点击 */
+        }
+        
+        #monthsCount {
+            text-align: center;
+            width: 75px;
+            padding-left: 1rem;
+        }
+        
+        #monthsContainerPre {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: none;
+        }
+
+        #monthsContainerPre.hidden-months {
+            display: none;
+            pointer-events: none;  /* 防止误点击 */
+        }
+        
+        #monthsCountPre {
+            text-align: center;
+            width: 75px;
+            padding-left: 1rem;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1.5px solid #d9e2eb;
+            border-radius: 18px;
+            font-size: 1rem;
+            background: white;
+        }
+
+        /* 五险一金网格 */
+        .insurance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 1rem 1.1rem;
+            margin: 0.8rem 0 1rem;
+            align-items: center;
+        }
+        .insurance-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+        .insurance-item label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #2c4459;
+        }
+        .insurance-item input {
+            padding: 0.6rem 0.8rem;
+            border-radius: 16px;
+            border: 1.5px solid #d9e2eb;
+            width: 100%;
+        }
+        .hint-range {
+            font-size: 0.75rem;
+            color: #6b879c;
+        }
+
+        /* 结果区域 */
+        .result-panel {
+            background: #f8fbfe;
+            border-radius: 1.5rem;
+            padding: 1.6rem;
+            margin-top: 1.5rem;
+            border: 1px solid #dee9f2;
+        }
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem 2rem;
+        }
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px dashed #bcccd9;
+            padding: 0.5rem 0;
+        }
+        .result-item .value {
+            font-weight: 600;
+            color: #0b2a4a;
+        }
+
+        /* 页脚 */
+        .app-footer {
+            max-width: 1200px;
+            width: 100%;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #5f768b;
+            margin-top: 1rem;
+            padding: 1rem 0;
+            line-height: 1.8;
+        }
+        .app-footer a {
+            color: #1e3a5f;
+            text-decoration: none;
+            margin: 0 6px;
+        }
+        .app-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .formula-card {
+            background: #f4f9fe;
+            border-radius: 20px;
+            padding: 1.2rem 1.8rem;
+            margin: 1.2rem 0;
+            border-left: 5px solid #1e3a5f;
+            font-family: 'SF Mono', 'Menlo', 'Monaco', 'Cascadia Code', 'Consolas', monospace;
+            box-shadow: inset 0 0 0 1px rgba(30,58,95,0.05);
+        }
+        .formula-item {
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 0.6rem 1rem;
+            padding: 0.3rem 0;
+        }
+        .formula-label {
+            font-weight: 700;
+            color: #0b2a4a;
+            min-width: 110px;
+            font-size: 1rem;
+        }
+        .formula-expr {
+            color: #1e3a5f;
+            font-weight: 500;
+            font-size: 1.05rem;
+            letter-spacing: 0.3px;
+            background: rgba(255,255,255,0.6);
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+        }
+        
+        /* 响应式 */
+        @media (max-width: 860px) {
+            body { padding: 0.8rem; }
+            .app-card { padding: 1.2rem; }
+            .title-section h1 { font-size: 1.6rem; }
+            .result-grid { grid-template-columns: 1fr; }
+            .radio-group { gap: 1rem; }
+
+            /* 菜单变成下拉模式 */
+            .menu-toggle {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+            }
+            
+            .nav-container {
+                position: relative;
+                z-index: 1000;
+            }
+
+            .tabs-nav {
+                display: none; /* 默认隐藏 */
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                z-index: 1001;
+                flex-direction: column;
+                background: white;
+                border-radius: 12px;
+                padding: 0.5rem;
+                box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+                border: 1px solid #eef2f6;
+                margin-bottom: 1.5rem;
+                border-bottom: none; /* 移除底部线条 */
+            }
+
+            .tabs-nav.show {
+                display: flex; /* 点击展开后显示 */
+                animation: slideDown 0.2s ease-out;
+            }
+
+            .tab-btn {
+                justify-content: flex-start; /* 移动端文字靠左对齐 */
+                padding: 0.9rem 1rem;
+                width: 100%;
+            }
+            
+            .radio-group {
+                border-radius: 20px;
+            }
+            
+            #monthsCount {
+                text-align: center;
+                width: 45px;
+                padding-left: 1rem;
+            }
+            
+            #monthsCountPre {
+                text-align: center;
+                width: 45px;
+                padding-left: 1rem;
+            }
+
+            @keyframes slideDown {
+                from { opacity: 0; transform: translateY(-10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="app-card">
+    <div class="header">
+        <div class="title-section">
+            <h1 id="mainTitle">薪税智算</h1>
+            <div class="sub" data-i18n="subtitle">工资薪金 & 劳务报酬 · 税前税后互算</div>
+        </div>
+        <div class="lang-switch">
+            <button class="lang-btn active" data-lang="zh">中文</button>
+            <button class="lang-btn" data-lang="en">English</button>
+        </div>
+    </div>
+    
+    <div class="nav-container">
+        <button class="menu-toggle" id="menuToggle">
+            <span style="display: flex; align-items: center; gap: 8px;">
+                <i class="fas fa-bars"></i>
+                <span id="currentMenuText">介绍</span>
+            </span>
+            <i class="fas fa-chevron-down toggle-icon"></i>
+        </button>
+        
+        <div class="tabs-nav" id="tabsNav">
+            <button class="tab-btn active" data-tab="intro"><i class="fas fa-info-circle"></i> <span data-i18n="tab_intro">介绍</span></button>
+            <button class="tab-btn" data-tab="afterTaxSalary"><i class="fas fa-arrow-down"></i> <span data-i18n="tab_after_salary">税后工资</span></button>
+            <button class="tab-btn" data-tab="preTaxSalary"><i class="fas fa-arrow-up"></i> <span data-i18n="tab_pre_salary">税前工资</span></button>
+            <button class="tab-btn" data-tab="afterTaxLabor"><i class="fa fa-angle-double-down"></i> <span data-i18n="tab_after_labor">税后劳务</span></button>
+            <button class="tab-btn" data-tab="preTaxLabor"><i class="fa fa-angle-double-up"></i> <span data-i18n="tab_pre_labor">税前劳务</span></button>
+        </div>
+    </div>
+
+    <!-- 介绍面板 -->
+    <div class="panel active" id="intro">
+        <div style="display: grid; gap: 1.8rem;">
+            <div class="card">
+                <h3 data-i18n="func_overview">功能概览</h3>
+                <p data-i18n="intro_text">本工具用于快速计算薪资劳务的扣税情况，包括：税后工资/劳务、税前工资/劳务（反推）。依据个税政策，包含专项扣除（五险一金）与专项附加扣除。</p>
+                <p data-i18n="intro_merge" style="margin-top: 0.8rem;">工资与劳务报酬在年度汇算清缴时需合并为综合所得计税。预扣阶段规则不同：工资累计预扣，劳务按次预扣。</p>
+            </div>
+            
+            <div class="card">
+                <h3 data-i18n="calc_method">计算方法与税率表</h3>
+                <p><span data-i18n="salary_rate_desc">综合所得适用七级超额累进税率 </span>
+                    <span class="cite-num" data-tooltip="《中华人民共和国个人所得税法》2018修订（主席令第九号）第三条">[1]</span>
+                    <span class="cite-num" data-tooltip="《个人所得税扣缴申报管理办法（试行）》（国家税务总局公告2018年第61号）第六条">[2]</span>
+                    <span data-i18n="colon">：</span></p>
+                <div class="formula-card">
+                    <div class="formula-item">
+                        <span class="formula-label" data-i18n="salary_income">应纳税所得额</span>
+                        <span class="formula-expr" data-i18n="salary_income_equation">= 累计收入 − 5000 × 月数 − 累计专项扣除 − 累计专项附加扣除</span>
+                    </div>
+                    <div class="formula-item">
+                        <span class="formula-label" data-i18n="salary_tax">应纳税额</span>
+                        <span class="formula-expr" data-i18n="salary_tax_equation">= 应纳税所得额 × 税率 − 速算扣除数</span>
+                    </div>
+                </div>
+                
+                <table class="rate-table">
+                    <thead><tr><th data-i18n="rate_level">级数</th><th data-i18n="annual_income_range">累计预扣应纳税所得额</th><th data-i18n="rate">税率</th><th data-i18n="quick_deduction">速算扣除数</th></tr></thead>
+                    <tbody>
+                        <tr><td>1</td><td>≤ 36,000</td><td>3%</td><td>0</td></tr>
+                        <tr><td>2</td><td>36,000 ~ 144,000</td><td>10%</td><td>2,520</td></tr>
+                        <tr><td>3</td><td>144,000 ~ 300,000</td><td>20%</td><td>16,920</td></tr>
+                        <tr><td>4</td><td>300,000 ~ 420,000</td><td>25%</td><td>31,920</td></tr>
+                        <tr><td>5</td><td>420,000 ~ 660,000</td><td>30%</td><td>52,920</td></tr>
+                        <tr><td>6</td><td>660,000 ~ 960,000</td><td>35%</td><td>85,920</td></tr>
+                        <tr><td>7</td><td>> 960,000</td><td>45%</td><td>181,920</td></tr>
+                    </tbody>
+                </table>
+                
+                <p style="margin-top:1.5rem;"><span data-i18n="labor_rate_desc">劳务报酬预扣缴税额</span><span class="cite-num" data-tooltip="《个人所得税扣缴申报管理办法（试行）》（国家税务总局公告2018年第61号）第八条">[2]</span><span data-i18n="colon">：</span></p>
+                <div class="formula-card">
+                    <div class="formula-item">
+                        <span class="formula-label" data-i18n="labor_income">收入额</span>
+                        <span class="formula-expr" data-i18n="labor_income_equation">= 每次收入 − 减除费用</span>
+                    </div>
+                    <div class="formula-item">
+                        <span class="formula-label" data-i18n="labor_tax">应纳税额</span>
+                        <span class="formula-expr" data-i18n="labor_tax_equation">= 收入额 × 税率 − 速算扣除数</span>
+                    </div>
+                </div>
+                
+                <table class="rate-table">
+                    <thead><tr><th data-i18n="labor_per_income">每次收入</th><th data-i18n="labor_exclude">减除费用</th></tr></thead>
+                    <tbody>
+                        <tr><td>≤ 4,000</td><td>800</td></tr>
+                        <tr><td>> 4,000</td><td>20%</td></tr>
+                    </tbody>
+                </table>
+                <p><span data-i18n="labor_rate_table">预扣率（三级）</span><span class="cite-num" data-tooltip="《个人所得税扣缴申报管理办法（试行）》（国家税务总局公告2018年第61号）第八条">[2]</span><span data-i18n="colon">：</span></p>
+                <table class="rate-table">
+                    <thead><tr><th data-i18n="labor_taxable">收入额</th><th data-i18n="labor_rate">预扣率</th><th data-i18n="quick_deduction">速算扣除数</th></tr></thead>
+                    <tbody>
+                        <tr><td>≤ 20,000</td><td>20%</td><td>0</td></tr>
+                        <tr><td>20,000 ~ 50,000</td><td>30%</td><td>2,000</td></tr>
+                        <tr><td>> 50,000</td><td>40%</td><td>7,000</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="card">
+                <h3 data-i18n="exclude_title">专项扣除与专项附加扣除</h3>
+                <p><span data-i18n="insurance_policy_title">五险一金缴费比例（专项扣除）：</span></p>                
+                <table class="rate-table">
+                    <thead><tr><th data-i18n="insurance_item">项目</th><th data-i18n="insurance_person">个人缴费</th><th data-i18n="insurance_company">单位缴费</th></tr></thead>
+                    <tbody>
+                        <tr><td><span data-i18n="insurance_pension">养老保险</span>
+                            <span class="cite-num" data-tooltip="《国务院关于完善企业职工基本养老保险制度的决定》（国发〔2005〕38号）第六条">[3]</span>
+                            <span class="cite-num" data-tooltip="《国务院办公厅关于印发降低社会保险费率综合方案的通知》（国办发〔2019〕13号）第一条">[4]</span></td>
+                            <td>8%</td><td>16%</td></tr>
+                        <tr><td><span data-i18n="insurance_medical">医疗保险</span>
+                            <span class="cite-num" data-tooltip="《国务院关于建立城镇职工基本医疗保险制度的决定》（国发〔1998〕44号）第二条">[5]</span>
+                            <span class="cite-num" data-tooltip="《国家医疗保障待遇清单（2020年版）》">[6]</span></td>
+                            <td>2%</td><td>6%</td></tr>
+                        <tr><td><span data-i18n="insurance_unemployment">失业保险</span>
+                            <span class="cite-num" data-tooltip="《关于阶段性降低失业保险费率有关问题的通知》（人社部发〔2017〕14号）">[7]</span>
+                            <span class="cite-num" data-tooltip="《人力资源社会保障部 财政部 国家税务总局关于延续实施失业保险援企稳岗政策的通知》（人社部发〔2024〕40号）">[8]</span></td>
+                            <td>0.3% ~ 0.5%</td><td>0.5% ~ 0.7%<span data-i18n="insurance_medical_sum">（总费率1%）</span></td></tr>
+                        <tr><td><span data-i18n="insurance_compensation">工伤保险</span>
+                            <span class="cite-num" data-tooltip="《中华人民共和国社会保险法》2018修订（主席令第二十五号）第三十三条">[9]</span>
+                            <span class="cite-num" data-tooltip="《人力资源社会保障部 财政部关于调整工伤保险费率政策的通知》（人社部发〔2015〕71号）">[10]</span></td>
+                            <td>0%</td><td>0.2% ~ 1.9%</td></tr>
+                        <tr><td><span data-i18n="insurance_maternity">生育保险</span>
+                            <span class="cite-num" data-tooltip="《人力资源社会保障部财政部关于适当降低生育保险费率的通知》（人社部发〔2015〕70号）">[11]</span></td>
+                            <td>0%</td><td>0.5%</td></tr>
+                        <tr><td><span data-i18n="insurance_housing">住房公积金</span>
+                            <span class="cite-num" data-tooltip="《住房公积金管理条例》2019修订（国务院令第710号）第十八条">[12]</span>
+                            <span class="cite-num" data-tooltip="《住房城乡建设部 财政部 人民银行关于改进住房公积金缴存机制进一步降低企业成本的通知》（建金〔2018〕45号）">[13]</span></td>
+                            <td>5 ~ 12%</td><td>5 ~ 12%</td></tr>
+                    </tbody>
+                </table>
+                <p style="margin-top:0.5rem;" data-i18n="insurance_note">* 本工具仅计算个人缴费部分。</p>
+                
+                <p style="margin-top:1.5rem;"><span data-i18n="special_deduction_title">专项附加扣除（月扣除标准）</span>
+                    <span class="cite-num" data-tooltip="《国务院关于印发个人所得税专项附加扣除暂行办法的通知》（国发〔2018〕41号）">[14]</span>
+                    <span class="cite-num" data-tooltip="《国务院关于提高个人所得税有关专项附加扣除标准的通知》（国发〔2023〕13号）">[15]</span><span data-i18n="colon">：</span></p>
+                <table class="rate-table">
+                    <thead><tr><th data-i18n="insurance_item">项目</th><th data-i18n="insurance_standard">标准</th><th data-i18n="insurance_item">项目</th><th data-i18n="insurance_standard">标准</th></tr></thead>
+                    <tbody>
+                        <tr><td data-i18n="item_child_edu">子女教育</td><td>2000/<span data-i18n="item_child">孩</span></td><td data-i18n="item_elder">赡养老人</td><td>3000</td></tr>
+                        <tr><td data-i18n="item_continue_edu">继续教育</td><td>400</td><td data-i18n="item_mortgage">住房贷款利息</td><td>1000</td></tr>
+                        <tr><td data-i18n="item_rent">住房租金</td><td>800 ~ 1500</td><td data-i18n="item_medical">大病医疗</td><td data-i18n="item_real">据实扣除</td></tr>
+                    </tbody>
+                </table>
+                
+            </div>
+            
+            <div class="card">
+                <h3 data-i18n="ref_title">参考规范</h3>
+                <ul class="ref-list">
+                    <li><span class="ref-index">[1]</span> <a class="ref-item" href="https://flk.npc.gov.cn/detail?id=2c909fdd678bf17901678bf724bd0609" target="_blank" data-tooltip="《中华人民共和国个人所得税法》2018修订（主席令第九号）">《中华人民共和国个人所得税法》2018修订（主席令第九号）</a></li>
+                    <li><span class="ref-index">[2]</span> <a class="ref-item" href="https://www.chinatax.gov.cn/n810219/n810744/n3752930/n3752974/c3963396/content.html" target="_blank" data-tooltip="《个人所得税扣缴申报管理办法（试行）》（国家税务总局公告2018年第61号）">《个人所得税扣缴申报管理办法（试行）》（国家税务总局公告2018年第61号）</a></li>
+                    <li><span class="ref-index">[3]</span> <a class="ref-item" href="https://www.gov.cn/zhengce/content/2008-03/28/content_7376.htm" target="_blank" data-tooltip="《国务院关于完善企业职工基本养老保险制度的决定》（国发〔2005〕38号）">《国务院关于完善企业职工基本养老保险制度的决定》（国发〔2005〕38号）</a></li>
+                    <li><span class="ref-index">[4]</span> <a class="ref-item" href="https://www.gov.cn/zhengce/content/2019-04/04/content_5379629.htm" target="_blank" data-tooltip="《国务院办公厅关于印发降低社会保险费率综合方案的通知》（国办发〔2019〕13号）">《国务院办公厅关于印发降低社会保险费率综合方案的通知》（国办发〔2019〕13号）</a></li>
+                    <li><span class="ref-index">[5]</span> <a class="ref-item" href="https://www.nhsa.gov.cn/art/1998/12/14/art_37_1189.html" target="_blank" data-tooltip="《国务院关于建立城镇职工基本医疗保险制度的决定》（国发〔1998〕44号）">《国务院关于建立城镇职工基本医疗保险制度的决定》（国发〔1998〕44号）</a></li>
+                    <li><span class="ref-index">[6]</span> <a class="ref-item" href="https://www.gov.cn/zhengce/zhengceku/2021-08/11/content_5630791.htm" target="_blank" data-tooltip="《国家医疗保障待遇清单（2020年版）》">《国家医疗保障待遇清单（2020年版）》</a></li>
+                    <li><span class="ref-index">[7]</span> <a class="ref-item" href="https://www.ndrc.gov.cn/xwdt/ztzl/jdstjjqycb/zccs/201706/t20170627_1028591.html" target="_blank" data-tooltip="《关于阶段性降低失业保险费率有关问题的通知》（人社部发〔2017〕14号）">《关于阶段性降低失业保险费率有关问题的通知》（人社部发〔2017〕14号）</a></li>
+                    <li><span class="ref-index">[8]</span> <a class="ref-item" href="https://www.gov.cn/zhengce/zhengceku/202405/content_6949562.htm" target="_blank" data-tooltip="《人力资源社会保障部 财政部 国家税务总局关于延续实施失业保险援企稳岗政策的通知》（人社部发〔2024〕40号）">《人力资源社会保障部 财政部 国家税务总局关于延续实施失业保险援企稳岗政策的通知》（人社部发〔2024〕40号）</a></li>
+                    <li><span class="ref-index">[9]</span> <a class="ref-item" href="https://flk.npc.gov.cn/detail?id=ff8080816f135f46016f210989b9179a" target="_blank" data-tooltip="《中华人民共和国社会保险法》2018修订（主席令第二十五号）">《中华人民共和国社会保险法》2018修订（主席令第二十五号）</a></li>
+                    <li><span class="ref-index">[10]</span> <a class="ref-item" href="https://www.mof.gov.cn/zhengwuxinxi/zhengcefabu/201507/t20150731_1396669.htm" target="_blank" data-tooltip="《人力资源社会保障部 财政部关于调整工伤保险费率政策的通知》（人社部发〔2015〕71号）">《人力资源社会保障部 财政部关于调整工伤保险费率政策的通知》（人社部发〔2015〕71号）</a></li>
+                    <li><span class="ref-index">[11]</span> <a class="ref-item" href="https://www.ndrc.gov.cn/xwdt/ztzl/gbmjcbzc/rsb/201801/t20180119_1209142.html" target="_blank" data-tooltip="《人力资源社会保障部财政部关于适当降低生育保险费率的通知》（人社部发〔2015〕70号）">《人力资源社会保障部财政部关于适当降低生育保险费率的通知》（人社部发〔2015〕70号）</a></li>
+                    <li><span class="ref-index">[12]</span> <a class="ref-item" href="https://flk.npc.gov.cn/detail?id=ff8080816f3cbb3c016f40fc7b680ff2" target="_blank" data-tooltip="《住房公积金管理条例》2019修订（国务院令第710号）">《住房公积金管理条例》2019修订（国务院令第710号）</a></li>
+                    <li><span class="ref-index">[13]</span> <a class="ref-item" href="https://www.gov.cn/zhengce/zhengceku/2018-12/31/content_5433352.htm" target="_blank" data-tooltip="《住房城乡建设部 财政部 人民银行关于改进住房公积金缴存机制进一步降低企业成本的通知》（建金〔2018〕45号）">《住房城乡建设部 财政部 人民银行关于改进住房公积金缴存机制进一步降低企业成本的通知》（建金〔2018〕45号）</a></li>
+                    <li><span class="ref-index">[14]</span> <a class="ref-item" href="https://www.gov.cn/zhengce/content/2018-12/22/content_5351181.htm" target="_blank" data-tooltip="《国务院关于印发个人所得税专项附加扣除暂行办法的通知》（国发〔2018〕41号）">《国务院关于印发个人所得税专项附加扣除暂行办法的通知》（国发〔2018〕41号）</a></li>
+                    <li><span class="ref-index">[15]</span> <a class="ref-item" href="https://www.gov.cn/zhengce/content/202308/content_6901206.htm" target="_blank" data-tooltip="《国务院关于提高个人所得税有关专项附加扣除标准的通知》（国发〔2023〕13号）">《国务院关于提高个人所得税有关专项附加扣除标准的通知》（国发〔2023〕13号）</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 税后工资面板 -->
+    <div class="panel" id="afterTaxSalary">
+        <div class="card">
+            <h3 style="margin-bottom:1rem;" data-i18n="after_salary_title">计算税后工资</h3>
+            <div class="radio-group">
+                <label><input type="radio" name="salaryType" value="month" checked> <span data-i18n="monthly">月工资</span></label>
+                <label><input type="radio" name="salaryType" value="year"> <span data-i18n="yearly">年工资</span></label>
+                <span style="margin-left: auto;" id="monthsContainer"><span data-i18n="months">月份数</span> <input id="monthsCount" type="number" min="1" value="12" style="border-radius:20px; border:1px solid #ccc; padding:0.3rem;"></span>
+            </div>
+            <div class="input-group">
+                <label class="input-label"><i class="fas fa-coins"></i> <span data-i18n="pre_tax_income">税前收入</span> <span id="incomeUnit">（月）</span></label>
+                <input type="number" id="preTaxSalaryInput" class="input-field" placeholder="e.g. 15000" value="15000">
+            </div>
+            <label class="input-label"><i class="fas fa-shield-alt"></i> <span data-i18n="five_insurance">五险一金比例（个人部分）</span></label>
+            <div class="insurance-grid">
+                <div class="insurance-item"><label><span data-i18n="pension">养老 </span><span class="hint-range">(8%)</span></label><input id="pension" type="number" step="0.1" min="0" max="30" value="8"></div>
+                <div class="insurance-item"><label><span data-i18n="medical">医疗 </span><span class="hint-range">(2%)</span></label><input id="medical" type="number" step="0.1" min="0" max="30" value="2"></div>
+                <div class="insurance-item"><label><span data-i18n="unemployment">失业 </span><span class="hint-range">(0.3 - 0.5%)</span></label><input id="unemployment" type="number" step="0.1" min="0" max="30" value="0.5"></div>
+                <div class="insurance-item"><label><span data-i18n="housing">公积金 </span><span class="hint-range">(5 - 12%)</span></label><input id="housingFund" type="number" step="0.1" min="0" max="30" value="12"></div>
+                <div class="insurance-item"><label><span data-i18n="other">补充 </span><span class="hint-range">(0 - 10%)</span></label><input id="otherInsurance" type="number" step="0.1" min="0" max="20" value="0"></div>
+            </div>
+            <div class="input-group">
+                <label class="input-label"><i class="fas fa-shield"></i> <span data-i18n="special_deduction">专项附加扣除（月）</span></label>
+                <input type="number" id="specialDeduction" class="input-field" value="0" min="0">
+            </div>
+            <div id="afterTaxResult" class="result-panel"></div>
+        </div>
+    </div>
+
+    <!-- 税前工资面板 -->
+    <div class="panel" id="preTaxSalary">
+        <div class="card">
+            <h3 style="margin-bottom:1rem;" data-i18n="pre_salary_title">计算税前工资</h3>
+            <div class="radio-group">
+                <label><input type="radio" name="salaryTypePre" value="month" checked> <span data-i18n="monthly">月工资</span></label>
+                <label><input type="radio" name="salaryTypePre" value="year"> <span data-i18n="yearly">年工资</span></label>
+                <span style="margin-left: auto;" id="monthsContainerPre"><span data-i18n="months">月份数</span> <input id="monthsCountPre" type="number" min="1" value="12" style="border-radius:20px; border:1px solid #ccc; padding:0.3rem;"></span>
+            </div>
+            <div class="input-group">
+                <label class="input-label"><i class="fas fa-coins"></i> <span data-i18n="expected_after_tax">期望税后收入</span> <span id="incomeUnitPre">（月）</span></label>
+                <input type="number" id="targetAfterTax" class="input-field" placeholder="e.g. 15000" value="15000">
+            </div>
+            <label class="input-label"><i class="fas fa-shield-alt"></i> <span data-i18n="five_insurance">五险一金比例（个人部分）</span></label>
+            <div class="insurance-grid">
+                <div class="insurance-item"><label><span data-i18n="pension">养老 </span><span class="hint-range">(8%)</span></label><input id="pensionPre" type="number" step="0.1" min="0" max="30" value="8"></div>
+                <div class="insurance-item"><label><span data-i18n="medical">医疗 </span><span class="hint-range">(2%)</span></label><input id="medicalPre" type="number" step="0.1" min="0" max="30" value="2"></div>
+                <div class="insurance-item"><label><span data-i18n="unemployment">失业 </span><span class="hint-range">(0.3 - 0.5%)</span></label><input id="unemploymentPre" type="number" step="0.1" min="0" max="30" value="0.5"></div>
+                <div class="insurance-item"><label><span data-i18n="housing">公积金 </span><span class="hint-range">(5 - 12%)</span></label><input id="housingFundPre" type="number" step="0.1" min="0" max="30" value="12"></div>
+                <div class="insurance-item"><label><span data-i18n="other">补充 </span><span class="hint-range">(0 - 10%)</span></label><input id="otherInsurancePre" type="number" step="0.1" min="0" max="20" value="0"></div>
+            </div>
+            <div class="input-group">
+                <label class="input-label"><i class="fas fa-shield"></i> <span data-i18n="special_deduction">专项附加扣除（月）</span></label>
+                <input type="number" id="specialDeductionPre" class="input-field" value="0">
+            </div>
+            <div id="preTaxResult" class="result-panel"></div>
+        </div>
+    </div>
+
+    <!-- 税后劳务 -->
+    <div class="panel" id="afterTaxLabor">
+        <div class="card">
+            <h3 style="margin-bottom:1rem;" data-i18n="after_labor_title">计算税后劳务</h3>
+            <div class="input-group">
+                <label class="input-label"><i class="fas fa-coins"></i> <span data-i18n="labor_income_per">劳务报酬收入（单次）</span></label>
+                <input type="number" id="laborIncome" class="input-field" placeholder="e.g. 10000" value="10000">
+            </div>
+            <div id="laborAfterResult" class="result-panel"></div>
+        </div>
+    </div>
+
+    <!-- 税前劳务 -->
+    <div class="panel" id="preTaxLabor">
+        <div class="card">
+            <h3 style="margin-bottom:1rem;" data-i18n="pre_labor_title">计算税前劳务</h3>
+            <div class="input-group">
+                <label class="input-label"><i class="fas fa-coins"></i> <span data-i18n="expected_labor_after">期望税后劳务收入（单次）</span></label>
+                <input type="number" id="targetLaborAfter" class="input-field" placeholder="e.g. 10000" value="10000">
+            </div>
+            <div id="laborPreResult" class="result-panel"></div>
+        </div>
+    </div>
+</div>
+
+<footer class="app-footer">
+    <div style="line-height: 1.8">
+        <a href="https://github.com/theFool-wn" target="_blank">GitHub</a> |
+        <a href="https://wangnan.net" target="_blank">HomePage</a> |
+        <a href="mailto:me@wangnan.net">Email</a>
+    </div>
+    <div style="line-height: 1.8">&copy; 2025-2026 Wang Nan. All rights reserved.</div>
+</footer>
+
+<script>
+    (function(){
+        "use strict";
+
+        // 多语言资源
+        const i18n = {
+            zh: {
+                subtitle: "工资薪金 & 劳务报酬 · 税前税后互算",
+                tab_intro: "介绍",
+                tab_after_salary: "税后工资",
+                tab_pre_salary: "税前工资",
+                tab_after_labor: "税后劳务",
+                tab_pre_labor: "税前劳务",
+                func_overview: "功能概览",
+                intro_text: "本工具用于快速计算薪资劳务的扣税情况，包括：税后工资/劳务、税前工资/劳务（反推）。依据个税政策，包含专项扣除（五险一金）与专项附加扣除。",
+                intro_merge: "工资与劳务报酬在年度汇算清缴时需合并为综合所得计税。预扣阶段规则不同：工资累计预扣，劳务按次预扣。",
+                calc_method: "计算方法与税率表",
+                salary_rate_desc: "综合所得适用七级超额累进税率 ",
+                colon: "：",
+                salary_income: "应纳税所得额",
+                salary_income_equation: "= 累计收入 − 5000 × 月数 − 累计专项扣除 − 累计专项附加扣除",
+                salary_tax: "应纳税额",
+                salary_tax_equation: "= 应纳税所得额 × 税率 − 速算扣除数",
+                rate_level: "级数",
+                annual_income_range: "累计预扣应纳税所得额",
+                rate: "税率",
+                quick_deduction: "速算扣除数",
+                labor_rate_desc: "劳务报酬预扣缴税额 ",
+                labor_income: "收入额",
+                labor_income_equation: "= 每次收入 − 减除费用",
+                labor_tax: "应纳税额",
+                labor_tax_equation: "= 收入额 × 税率 − 速算扣除数",
+                labor_per_income: "每次收入",
+                labor_exclude: "减除费用",
+                labor_rate_table: "预扣率（三级）",
+                labor_taxable: "收入额",
+                labor_rate: "预扣率",
+                exclude_title: "专项扣除与专项附加扣除",
+                insurance_policy_title: "五险一金缴费比例（专项扣除）：",
+                insurance_item: "项目",
+                insurance_person: "个人缴费",
+                insurance_company: "单位缴费",
+                insurance_pension: "养老保险",
+                insurance_medical: "医疗保险",
+                insurance_compensation: "工伤保险",
+                insurance_maternity: "生育保险",
+                insurance_unemployment: "失业保险",
+                insurance_housing: "住房公积金",
+                insurance_medical_sum: "（总费率1%）",
+                insurance_note: "* 本工具仅计算个人缴费部分。",
+                special_deduction_title: "专项附加扣除（月扣除标准）",
+                insurance_standard: "标准",
+                item_child_edu: "子女教育",
+                item_child: "孩",
+                item_elder: "赡养老人",
+                item_continue_edu: "继续教育",
+                item_mortgage: "住房贷款利息",
+                item_rent: "住房租金",
+                item_medical: "大病医疗",
+                item_real: "据实扣除",
+                ref_title: "参考规范",
+                
+                after_salary_title: "计算税后工资",
+                monthly: "月工资",
+                yearly: "年工资",
+                months: "月份数",
+                pre_tax_income: "税前收入",
+                five_insurance: "五险一金比例（个人部分）",
+                special_deduction: "专项附加扣除（月）",
+                pension: "养老 ",
+                medical: "医疗 ",
+                unemployment: "失业 ",
+                housing: "公积金 ",
+                other: "补充 ",
+                monthly_salary: "月工资（税前收入）",
+                annual_salary: "年工资（税前收入）",
+                result_insurance: "五险一金（月）",
+                result_taxable: "应纳税所得额（月）",
+                rate_applied: "适用税率",
+                quick_deduction_applied: "速算扣除数（年）",
+                result_tax_monthly: "应纳税额（月）",
+                result_tax_annually: "应纳税额（年）",
+                result_after_monthly: "税后收入（月）",
+                result_after_annually: "税后收入（年）",
+                
+                pre_salary_title: "计算税前工资",
+                expected_after_tax: "期望税后收入",
+                
+                after_labor_title: "计算税后劳务",
+                labor_income_per: "劳务报酬收入（单次）",
+                labor_result_exclude: "减除费用",
+                labor_result_after: "税后收入",
+                
+                pre_labor_title: "计算税前劳务",
+                expected_labor_after: "期望税后劳务收入（单次）",
+                labor_result_pre: "税前劳务",
+            },
+            en: {
+                subtitle: "Salary & Labor Remuneration · Pre/Post Tax Calculator",
+                tab_intro: "Intro",
+                tab_after_salary: "After-tax Salary",
+                tab_pre_salary: "Pre-tax Salary",
+                tab_after_labor: "After-tax Labor Remuneration",
+                tab_pre_labor: "Pre-tax Labor Remuneration",
+                func_overview: "Overview",
+                intro_text: "This tool is designed to quickly calculate the tax deductions on salaries and labor remuneration, including after-tax and pre-tax income (reverse calculation). In accordance with individual income tax policies, it covers special deductions (social insurances and housing fund) and additional special deductions.",
+                intro_merge: "Salaries and labor remuneration shall be consolidated into comprehensive income for tax filing during annual final settlement. Withholding rules differ at the prepayment stage: wages are withheld cumulatively, while labor remuneration is withheld per occurrence.",
+                calc_method: "Calculation & Tax Rates",
+                salary_rate_desc: "Comprehensive income is subject to seven-level progressive tax rates on excess amounts ",
+                colon: ":",
+                salary_income: "Taxable Income",
+                salary_income_equation: "= Cumulative Income − 5000 × Number of Months − Cumulative Special Deductions − Cumulative Special Additional Deductions",
+                salary_tax: "Tax Payable",
+                salary_tax_equation: "= Taxable Income × Rate − Quick deduction",
+                rate_level: "Level",
+                annual_income_range: "Cumulative taxable income",
+                rate: "Rate",
+                quick_deduction: "Quick deduction",
+                labor_rate_desc: "Withholding Tax on Labor Remuneration ",
+                labor_income: "Income",
+                labor_income_equation: "= Each Income − Expense Deduction",
+                labor_tax: "Tax Payable",
+                labor_tax_equation: "= Income × Rate − Quick deduction",
+                labor_per_income: "Each Income",
+                labor_exclude: "Expense Deduction",
+                labor_rate_table: "Withholding Rate (3 Levels) ",
+                labor_taxable: "Income",
+                labor_rate: "Withholding Rate",
+                exclude_title: "Special Deductions and Additional Special Deductions",
+                insurance_policy_title: "Contribution Rates for Social Insurance & Housing Fund (Special Deductions) ",
+                insurance_item: "Item",
+                insurance_person: "Individual Contribution",
+                insurance_company: "Employer Contribution",
+                insurance_pension: "Pension Insurance",
+                insurance_medical: "Medical Insurance",
+                insurance_compensation: "Work Injury Insurance",
+                insurance_maternity: "Maternity Insurance",
+                insurance_unemployment: "Unemployment Insurance",
+                insurance_housing: "Housing Fund",
+                insurance_medical_sum: "(Total Rate 1%)",
+                insurance_note: "* Only individual contributions are calculated.",
+                special_deduction_title: "Additional Special Deductions (Monthly Deduction Standard) ",
+                insurance_standard: "Standard",
+                item_child_edu: "Children Education",
+                item_child: "Child",
+                item_elder: "Supporting Elderly Parents",
+                item_continue_edu: "Continuing Education",
+                item_mortgage: "Mortgage Interest",
+                item_rent: "Rent",
+                item_medical: "Serious Illness Medical Expenses",
+                item_real: "Actual-based Deduction",
+                ref_title: "References",
+                
+                after_salary_title: "After-tax Salary",
+                monthly: "Monthly",
+                yearly: "Yearly",
+                months: "Number of Months",
+                pre_tax_income: "Pre-tax Salary",
+                five_insurance: "Contribution Rates for Social Insurance & Housing Fund (Individual)",
+                special_deduction: "Special additional deduction (monthly)",
+                pension: "Pension ",
+                medical: "Medical ",
+                unemployment: "Unemployment ",
+                housing: "Housing Fund ",
+                other: "Other ",
+                monthly_salary: "Monthly Salary",
+                annual_salary: "Annual Salary",
+                result_insurance: "Insurance & Fund (Monthly)",
+                rate_applied: "Applicable Rate",
+                quick_deduction_applied: "Quick Deduction (Annually)",
+                result_tax_monthly: "Tax (Monthly)",
+                result_tax_annually: "Tax (Annually)",
+                result_after_monthly: "After-tax Income (Monthly)",
+                result_after_annually: "After-tax Income (Annually)",
+                
+                pre_salary_title: "Pre-tax Salary",
+                expected_after_tax: "Expected after-tax",
+                
+                after_labor_title: "After-tax Labor Remuneration",
+                labor_income_per: "Labor Remuneration (Per Occurrence)",
+                labor_result_exclude: "Expense Deduction",
+                labor_result_after: "After-tax Income",
+                
+                pre_labor_title: "Pre-tax Labor Remuneration",
+                expected_labor_after: "Expected after-tax Labor Remuneration (Per Occurrence)",
+                labor_result_pre: "Pre-tax Labor Remuneration",
+            }
+        };
+
+        let currentLang = 'zh';
+        function t(key) { return i18n[currentLang]?.[key] || key; }
+        function applyLanguage(lang) {
+            currentLang = lang;
+            document.getElementById('mainTitle').innerText = (lang==='zh'?'薪税智算':'SalaryTax Calc');
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n[lang]?.[key]) el.innerText = i18n[lang][key];
+            });
+            
+            const activeTab = document.querySelector('.tab-btn.active');
+            if (activeTab) {
+                // 获取当前激活标签页的 key
+                const activeKey = activeTab.getAttribute('data-tab');
+                const keyMap = {
+                    'intro': 'tab_intro',
+                    'afterTaxSalary': 'tab_after_salary',
+                    'preTaxSalary': 'tab_pre_salary',
+                    'afterTaxLabor': 'tab_after_labor',
+                    'preTaxLabor': 'tab_pre_labor'
+                };
+                const translationKey = keyMap[activeKey];
+                const menuLabel = document.getElementById('currentMenuText');
+                
+                if (translationKey && i18n[lang][translationKey]) {
+                    menuLabel.innerText = i18n[lang][translationKey];
+                    // 更新 menuLabel 的 data-i18n 属性，确保逻辑一致
+                    menuLabel.setAttribute('data-i18n', translationKey);
+                }
+            }
+            
+            document.querySelectorAll('[data-i18n-ref]').forEach(el => {
+                const key = el.getAttribute('data-i18n-ref');
+                if (i18n[lang]?.[key]) el.innerText = i18n[lang][key];
+            });
+            updateIncomeUnit();
+            // 触发自动重算
+            refreshAllCalculations();
+        }
+
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                applyLanguage(btn.dataset.lang);
+            });
+        });
+
+        // 标签切换
+        const tabs = document.querySelectorAll('.tab-btn');
+        const panels = {
+            intro: document.getElementById('intro'),
+            afterTaxSalary: document.getElementById('afterTaxSalary'),
+            preTaxSalary: document.getElementById('preTaxSalary'),
+            afterTaxLabor: document.getElementById('afterTaxLabor'),
+            preTaxLabor: document.getElementById('preTaxLabor')
+        };
+        
+        // 移动端菜单切换逻辑
+        const menuToggle = document.getElementById('menuToggle');
+        const tabsNav = document.getElementById('tabsNav');
+        const currentMenuText = document.getElementById('currentMenuText');
+
+        menuToggle.addEventListener('click', () => {
+            tabsNav.classList.toggle('show');
+            menuToggle.classList.toggle('open');
+        });
+
+        // 修改原有的标签切换逻辑
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabId = tab.dataset.tab;
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                Object.values(panels).forEach(p => p.classList.remove('active'));
+                panels[tabId].classList.add('active');
+                // --- 新增：更新折叠菜单上显示的文字，并自动收起菜单 ---
+                const tabText = tab.querySelector('span').innerText;
+                currentMenuText.innerText = tabText;
+                
+                if (window.innerWidth <= 860) {
+                    tabsNav.classList.remove('show');
+                    menuToggle.classList.remove('open');
+                }
+                
+                refreshAllCalculations();
+            });
+        });
+        
+        document.addEventListener('click', (e) => {
+            const isClickInsideMenu = tabsNav.contains(e.target);
+            const isClickOnToggle = menuToggle.contains(e.target);
+        
+            // 如果点击的既不是菜单也不是开关，且菜单当前是打开状态，则关闭
+            if (!isClickInsideMenu && !isClickOnToggle && tabsNav.classList.contains('show')) {
+                tabsNav.classList.remove('show');
+                menuToggle.classList.remove('open');
+            }
+        });
+
+        // 输入限制
+        function enforceRange(input) {
+            const min = parseFloat(input.min), max = parseFloat(input.max);
+            let val = parseFloat(input.value);
+            if (isNaN(val)) return;
+            if (val < min) input.value = min;
+            if (val > max) input.value = max;
+        }
+        document.querySelectorAll('input[type="number"][min][max]').forEach(inp => {
+            inp.addEventListener('input', () => enforceRange(inp));
+            inp.addEventListener('blur', () => enforceRange(inp));
+        });
+        // 月份数 >=1
+        ['monthsCount','monthsCountPre'].forEach(id => {
+            const el = document.getElementById(id);
+            if(el) el.addEventListener('input', function(){ if(this.value < 1) this.value = 1; });
+        });
+
+        // 税率函数
+        function getTaxRate(annualTaxable) {
+            if (annualTaxable <= 36000) return { rate: 0.03, deduction: 0 };
+            if (annualTaxable <= 144000) return { rate: 0.10, deduction: 2520 };
+            if (annualTaxable <= 300000) return { rate: 0.20, deduction: 16920 };
+            if (annualTaxable <= 420000) return { rate: 0.25, deduction: 31920 };
+            if (annualTaxable <= 660000) return { rate: 0.30, deduction: 52920 };
+            if (annualTaxable <= 960000) return { rate: 0.35, deduction: 85920 };
+            return { rate: 0.45, deduction: 181920 };
+        }
+        function getLaborRate(taxable) {
+            if (taxable <= 20000) return { rate: 0.20, deduction: 0 };
+            if (taxable <= 50000) return { rate: 0.30, deduction: 2000 };
+            return { rate: 0.40, deduction: 7000 };
+        }
+
+        // 更新单位文本
+        function updateIncomeUnit() {
+            const unitSpan = document.getElementById('incomeUnit');
+            const unitSpanPre = document.getElementById('incomeUnitPre');
+            if(unitSpan) {
+                const isYear = document.querySelector('input[name="salaryType"]:checked')?.value==='year';
+                unitSpan.innerText = isYear ? (currentLang==='zh'?'（年）':'(Yearly)') : (currentLang==='zh'?'（月）':'(Monthly)');
+            }
+            if(unitSpanPre) {
+                const isYear = document.querySelector('input[name="salaryTypePre"]:checked')?.value==='year';
+                unitSpanPre.innerText = isYear ? (currentLang==='zh'?'（年）':'(Yearly)') : (currentLang==='zh'?'（月）':'(Monthly)');
+            }
+        }
+
+        // 计算与渲染
+        function calcAfterTaxSalary() {
+            const isYear = document.querySelector('input[name="salaryType"]:checked').value === 'year';
+            const months = parseFloat(document.getElementById('monthsCount').value) || 12;
+            let income = parseFloat(document.getElementById('preTaxSalaryInput').value) || 0;
+            const pension = parseFloat(document.getElementById('pension').value)||0;
+            const medical = parseFloat(document.getElementById('medical').value)||0;
+            const unemp = parseFloat(document.getElementById('unemployment').value)||0;
+            const house = parseFloat(document.getElementById('housingFund').value)||0;
+            const other = parseFloat(document.getElementById('otherInsurance').value)||0;
+            const totalInsRate = (pension+medical+unemp+house+other)/100;
+            const specialDed = parseFloat(document.getElementById('specialDeduction').value)||0;
+
+            let monthlyIncome = isYear ? income / months : income;
+            const insurance = monthlyIncome * totalInsRate;
+            const taxableMonthly = monthlyIncome - insurance - 5000 - specialDed;
+            const annualTaxable = taxableMonthly * months;
+            const { rate, deduction } = getTaxRate(annualTaxable);
+            const annualTax = Math.max(0, annualTaxable * rate - deduction);
+            const monthlyTax = annualTax / months;
+            const afterTaxMonthly = monthlyIncome - insurance - monthlyTax;
+            const afterTaxAnnual = afterTaxMonthly * months;
+
+            const resultDiv = document.getElementById('afterTaxResult');
+            resultDiv.innerHTML = `
+                <div class="result-grid">
+                    <div class="result-item"><span>${t('monthly_salary')}</span><span class="value">${monthlyIncome.toFixed(2)}</span></div>
+                    <div class="result-item"><span>${t('annual_salary')}</span><span class="value">${(monthlyIncome*months).toFixed(2)}</span></div>
+                    <div class="result-item"><span>${t('result_insurance')}</span><span class="value">${insurance.toFixed(2)}</span></div>
+                    <div class="result-item"><span>${t('result_taxable')}</span><span class="value">${(Math.max(0, taxableMonthly)).toFixed(2)}</span></div>
+                    <div class="result-item"><span>${t('rate_applied')}</span><span class="value">${(rate*100).toFixed(0)}%</span></div>
+                    <div class="result-item"><span>${t('quick_deduction_applied')}</span><span class="value">${deduction.toFixed(0)}</span></div>
+                    <div class="result-item"><span>${t('result_tax_monthly')}</span><span class="value">${monthlyTax.toFixed(2)}</span></div>
+                    <div class="result-item"><span>${t('result_tax_annually')}</span><span class="value">${annualTax.toFixed(2)}</span></div>
+                    <div class="result-item"><span>${t('result_after_monthly')}</span><span class="value">${afterTaxMonthly.toFixed(2)}</span></div>
+                    <div class="result-item"><span>${t('result_after_annually')}</span><span class="value">${afterTaxAnnual.toFixed(2)}</span></div>
+                </div>`;
+        }
+
+        function calcPreTaxSalary() {
+            const isYear = document.querySelector('input[name="salaryTypePre"]:checked').value === 'year';
+            const months = parseFloat(document.getElementById('monthsCountPre').value)||12;
+            let target = parseFloat(document.getElementById('targetAfterTax').value)||0;
+            const pension = parseFloat(document.getElementById('pensionPre').value)||0;
+            const medical = parseFloat(document.getElementById('medicalPre').value)||0;
+            const unemp = parseFloat(document.getElementById('unemploymentPre').value)||0;
+            const house = parseFloat(document.getElementById('housingFundPre').value)||0;
+            const other = parseFloat(document.getElementById('otherInsurancePre').value)||0;
+            const totalInsRate = (pension+medical+unemp+house+other)/100;
+            const specialDed = parseFloat(document.getElementById('specialDeductionPre').value)||0;
+            const targetMonthly = isYear ? target / months : target;
+
+            let low = targetMonthly, high = targetMonthly * 3, pre = 0;
+            for(let i=0; i<100; i++){
+                const mid = (low+high)/2;
+                const insurance = mid * totalInsRate;
+                const taxable = mid - insurance - 5000 - specialDed;
+                const annualTaxable = taxable * months;
+                const { rate, deduction } = getTaxRate(annualTaxable);
+                const annualTax = Math.max(0, annualTaxable * rate - deduction);
+                const monthlyTax = annualTax / months;
+                const after = mid - insurance - monthlyTax;
+                if (Math.abs(after - targetMonthly) < 0.0001) { pre = mid; break; }
+                if (after > targetMonthly) high = mid; else low = mid;
+                pre = mid;
+            }
+            const insurance = pre * totalInsRate;
+            const taxable = pre - insurance - 5000 - specialDed;
+            const annualTaxable = taxable * months;
+            const { rate, deduction } = getTaxRate(annualTaxable);
+            const annualTax = Math.max(0, annualTaxable * rate - deduction);
+            const monthlyTax = annualTax / months;
+            const resultDiv = document.getElementById('preTaxResult');
+            resultDiv.innerHTML = `
+                <div class="result-grid">
+                    <div class="result-item"><span>${t('monthly_salary')}</span><span class="value">${pre.toFixed(2)}</span></div>
+                    <div class="result-item"><span>${t('annual_salary')}</span><span class="value">${(pre*months).toFixed(2)}</span></div>
+                    <div class="result-item"><span>${t('result_insurance')}</span><span class="value">${insurance.toFixed(2)}</span></div>
+                    <div class="result-item"><span>${t('result_taxable')}</span><span class="value">${(Math.max(0, taxable)).toFixed(2)}</span></div>
+                    <div class="result-item"><span>${t('rate_applied')}</span><span class="value">${(rate*100).toFixed(0)}%</span></div>
+                    <div class="result-item"><span>${t('quick_deduction_applied')}</span><span class="value">${deduction.toFixed(0)}</span></div>
+                    <div class="result-item"><span>${t('result_tax_monthly')}</span><span class="value">${monthlyTax.toFixed(2)}</span></div>
+                    <div class="result-item"><span>${t('result_tax_annually')}</span><span class="value">${annualTax.toFixed(2)}</span></div>
+                    <div class="result-item"><span>${t('result_after_monthly')}</span><span class="value">${(pre-insurance-monthlyTax).toFixed(2)}</span></div>
+                    <div class="result-item"><span>${t('result_after_annually')}</span><span class="value">${((pre-insurance-monthlyTax)*months).toFixed(2)}</span></div>
+                </div>`;
+        }
+
+        function calcLaborAfter() {
+            const income = parseFloat(document.getElementById('laborIncome').value)||0;
+            let exclude, taxable, tax, rate=0, deduction=0;
+            if (income <= 4000) {
+                exclude = 800;
+                taxable = income - exclude;
+                tax = Math.max(0, taxable * 0.2);
+                rate = 0.2;
+            } else {
+                exclude = income * 0.2;
+                taxable = income * 0.8;
+                const r = getLaborRate(taxable);
+                rate = r.rate;
+                deduction = r.deduction;
+                tax = Math.max(0, taxable * rate - deduction);
+            }
+            const after = income - tax;
+            const div = document.getElementById('laborAfterResult');
+            div.innerHTML = `<div class="result-grid">
+                <div class="result-item"><span>${t('labor_result_exclude')}</span><span class="value">${exclude.toFixed(2)}</span></div>
+                <div class="result-item"><span>${t('labor_taxable')}</span><span class="value">${(Math.max(0, taxable)).toFixed(2)}</span></div>
+                <div class="result-item"><span>${t('rate_applied')}</span><span class="value">${(rate*100).toFixed(0)}%</span></div>
+                <div class="result-item"><span>${t('quick_deduction')}</span><span class="value">${deduction}</span></div>
+                <div class="result-item"><span>${t('labor_tax')}</span><span class="value">${tax.toFixed(2)}</span></div>
+                <div class="result-item"><span>${t('labor_result_after')}</span><span class="value">${after.toFixed(2)}</span></div>
+            </div>`;
+        }
+
+        function calcLaborPre() {
+            const target = parseFloat(document.getElementById('targetLaborAfter').value)||0;
+            let low = target, high = target * 3, pre = 0;
+            for(let i=0;i<100;i++){
+                const mid = (low+high)/2;
+                let tax, rate=0, deduction=0;
+                if (mid <= 4000) {
+                    tax = Math.max(0, (mid-800)*0.2);
+                    rate=0.2;
+                } else {
+                    const taxable=mid*0.8;
+                    const r=getLaborRate(taxable);
+                    rate=r.rate;
+                    deduction=r.deduction;
+                    tax=Math.max(0,taxable*rate - deduction);
+                }
+                const after = mid - tax;
+                if (Math.abs(after-target)<0.0001){ pre = mid; break; }
+                if (after > target) high = mid; else low = mid;
+                pre = mid;
+            }
+            let exclude, taxable, tax, rate=0, deduction=0;
+            if (pre<=4000) {
+                exclude = 800;
+                taxable = pre - exclude;
+                tax = Math.max(0, taxable * 0.2);
+                rate = 0.2;
+            } else {
+                exclude = pre * 0.2;
+                taxable = pre * 0.8;
+                const r = getLaborRate(taxable);
+                rate = r.rate;
+                deduction = r.deduction;
+                tax = Math.max(0, taxable * rate - deduction);
+            }
+            const div = document.getElementById('laborPreResult');
+            div.innerHTML = `<div class="result-grid">
+                <div class="result-item"><span>${t('labor_result_exclude')}</span><span class="value">${exclude.toFixed(2)}</span></div>
+                <div class="result-item"><span>${t('labor_taxable')}</span><span class="value">${(Math.max(0, taxable)).toFixed(2)}</span></div>
+                <div class="result-item"><span>${t('rate_applied')}</span><span class="value">${(rate*100).toFixed(0)}%</span></div>
+                <div class="result-item"><span>${t('quick_deduction')}</span><span class="value">${deduction}</span></div>
+                <div class="result-item"><span>${t('labor_tax')}</span><span class="value">${tax.toFixed(2)}</span></div>
+                <div class="result-item"><span>${t('labor_result_pre')}</span><span class="value">${pre.toFixed(2)}</span></div>
+            </div>`;
+        }
+
+        function refreshAllCalculations() {
+            if (panels.afterTaxSalary.classList.contains('active')) calcAfterTaxSalary();
+            if (panels.preTaxSalary.classList.contains('active')) calcPreTaxSalary();
+            if (panels.afterTaxLabor.classList.contains('active')) calcLaborAfter();
+            if (panels.preTaxLabor.classList.contains('active')) calcLaborPre();
+        }
+
+        // 绑定自动计算事件
+        function bindAutoCalc() {
+            const inputs = [
+                'preTaxSalaryInput','monthsCount','pension','medical','unemployment','housingFund','otherInsurance','specialDeduction',
+                'targetAfterTax','monthsCountPre','pensionPre','medicalPre','unemploymentPre','housingFundPre','otherPre','specialDeductionPre',
+                'laborIncome','targetLaborAfter'
+            ];
+            inputs.forEach(id => {
+                const el = document.getElementById(id);
+                if(el) el.addEventListener('input', refreshAllCalculations);
+            });
+            document.querySelectorAll('input[name="salaryType"], input[name="salaryTypePre"]').forEach(r => {
+                r.addEventListener('change', ()=>{
+                    updateIncomeUnit();
+                    refreshAllCalculations();
+                });
+            });
+        }
+        
+        const salaryTypeRadios = document.querySelectorAll('input[name="salaryType"]');
+        const salaryTypeRadiosPre = document.querySelectorAll('input[name="salaryTypePre"]');
+        function toggleMonthsVisibility() {
+            const isYear = document.querySelector('input[name="salaryType"]:checked').value === 'year';
+            const container = document.getElementById('monthsContainer');
+            const isYearPre = document.querySelector('input[name="salaryTypePre"]:checked').value === 'year';
+            const containerPre = document.getElementById('monthsContainerPre');
+            
+            container.classList.toggle('hidden-months', isYear);
+            if (isYear) {
+                document.getElementById('monthsCount').value = 12;
+            }
+            containerPre.classList.toggle('hidden-months', isYearPre);
+            if (isYearPre) {
+                document.getElementById('monthsCountPre').value = 12;
+            }
+            
+            updateIncomeUnit();
+            refreshAllCalculations();
+        }
+
+        salaryTypeRadios.forEach(radio => {
+            radio.addEventListener('change', toggleMonthsVisibility);
+        });
+        
+        salaryTypeRadiosPre.forEach(radio => {
+            radio.addEventListener('change', toggleMonthsVisibility);
+        });
+        
+        // 初始化
+        applyLanguage('zh');
+        toggleMonthsVisibility();
+        bindAutoCalc();
+        refreshAllCalculations();
+    })();
+</script>
+</body>
+</html>
